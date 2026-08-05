@@ -29,6 +29,7 @@ The goal is to give decision-makers exactly what they need to act — no more, n
 ## Input
 
 The user provides one or more of:
+
 - CVE identifiers (CVE-2024-XXXXX)
 - CVSS scores and vectors
 - Pentest report excerpts or full reports
@@ -66,12 +67,12 @@ budget, approve timeline, acknowledge risk, authorize remediation. No ask = no a
 
 Translate technical severity ratings to business language:
 
-| Technical | CVSS Range | Business framing |
-|---|---|---|
-| Critical | 9.0–10.0 | Immediate business risk — action required now |
-| High | 7.0–8.9 | Significant risk — action required within 30 days |
-| Medium | 4.0–6.9 | Manageable risk — plan remediation within 90 days |
-| Low | 0.1–3.9 | Accepted risk — monitor, no immediate action |
+| Technical | CVSS Range | Business framing                                  |
+| --------- | ---------- | ------------------------------------------------- |
+| Critical  | 9.0–10.0   | Immediate business risk — action required now     |
+| High      | 7.0–8.9    | Significant risk — action required within 30 days |
+| Medium    | 4.0–6.9    | Manageable risk — plan remediation within 90 days |
+| Low       | 0.1–3.9    | Accepted risk — monitor, no immediate action      |
 
 If a finding is actively exploited in the wild (CISA KEV, threat intel), escalate one
 level in business urgency regardless of CVSS score.
@@ -198,7 +199,7 @@ Executive: "A critical weakness was discovered in software our web application d
 on. An attacker on the internet — with no account or credentials — could take full
 control of our server, access all data stored on it, and potentially spread to connected
 systems. A ready-made tool to exploit this is publicly available, meaning even unskilled
-attackers could use it. We have 72 hours to apply a vendor-provided fix before this
+attackers could use it. We have to apply a vendor-provided fix before this
 becomes an active threat to us."
 
 ---
