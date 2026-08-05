@@ -7,21 +7,42 @@
 #   ./install.sh security-by-design security-translator  # install only selected skills
 #   ./install.sh --project        # install in the current project instead of globally
 #   ./install.sh --force          # overwrite without asking for confirmation
+#   ./install.sh --skill-path skill  # look for skills under <repo>/skill instead of the repo root
 #
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_DIR="$HOME/.claude/skills"
+SKILL_PATH="$REPO_DIR"
 FORCE=0
 SELECTED=()
 
-for arg in "$@"; do
+while [ "$#" -gt 0 ]; do
+  arg="$1"
   case "$arg" in
     --project)
       TARGET_DIR="$(pwd)/.claude/skills"
       ;;
     --force)
       FORCE=1
+      ;;
+    --skill-path)
+      if [ "$#" -lt 2 ]; then
+        echo "--skill-path requires a value." >&2
+        exit 1
+      fi
+      shift
+      case "$1" in
+        /*) SKILL_PATH="$1" ;;
+        *)  SKILL_PATH="$REPO_DIR/$1" ;;
+      esac
+      ;;
+    --skill-path=*)
+      value="${arg#--skill-path=}"
+      case "$value" in
+        /*) SKILL_PATH="$value" ;;
+        *)  SKILL_PATH="$REPO_DIR/$value" ;;
+      esac
       ;;
     -h|--help)
       grep '^#' "$0" | sed 's/^# \{0,1\}//'
@@ -31,26 +52,32 @@ for arg in "$@"; do
       SELECTED+=("$arg")
       ;;
   esac
+  shift
 done
+
+if [ ! -d "$SKILL_PATH" ]; then
+  echo "Skill path not found: $SKILL_PATH" >&2
+  exit 1
+fi
 
 mkdir -p "$TARGET_DIR"
 
-# Find the skill folders in the repo: any top-level directory that contains
-# a SKILL.md, excluding the repo's own "technical" folders.
+# Find the skill folders under SKILL_PATH: any top-level directory that
+# contains a SKILL.md, excluding "technical" folders of the repo itself.
 # (while-read loop instead of mapfile: compatible with bash 3.2 too,
 #  the version preinstalled on macOS)
 ALL_SKILLS=()
 while IFS= read -r skill_name; do
   ALL_SKILLS+=("$skill_name")
 done < <(
-  find "$REPO_DIR" -maxdepth 2 -type f -name "SKILL.md" \
+  find "$SKILL_PATH" -maxdepth 2 -type f -name "SKILL.md" \
     | xargs -n1 dirname \
     | xargs -n1 basename \
     | sort
 )
 
 if [ "${#ALL_SKILLS[@]}" -eq 0 ]; then
-  echo "No skills found in $REPO_DIR (no folder with SKILL.md)." >&2
+  echo "No skills found in $SKILL_PATH (no folder with SKILL.md)." >&2
   exit 1
 fi
 
@@ -67,7 +94,7 @@ INSTALLED=0
 SKIPPED=0
 
 for skill in "${SKILLS_TO_INSTALL[@]}"; do
-  SRC="$REPO_DIR/$skill"
+  SRC="$SKILL_PATH/$skill"
 
   if [ ! -f "$SRC/SKILL.md" ]; then
     echo "⚠️  '$skill' is not a valid skill (missing SKILL.md), skipping." >&2
