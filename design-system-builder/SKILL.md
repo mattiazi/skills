@@ -70,7 +70,7 @@ Invite a thumbs-up or a tweak. If the user says "just generate it", skip the gut
 
 ### Phase 3 — Generate the spec
 
-Read `spec-template.md` and produce the document following its structure exactly. Fill every section with **real, concrete, project-specific values** derived from the agreed direction — never placeholders like "Color 1" or "your-font-here". Run the principles checklist below before you hand it over.
+Read `references/spec-template.md` and produce the document following its structure exactly. Fill every section with **real, concrete, project-specific values** derived from the agreed direction — never placeholders like "Color 1" or "your-font-here". Run the principles checklist below before you hand it over.
 
 When done, save it as a Markdown file and tell the user how to use it:
 
