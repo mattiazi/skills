@@ -1,17 +1,17 @@
 # skills
 
-A collection of [Claude Agent Skills](https://docs.claude.com/en/docs/agents-and-tools/agent-skills) — security-focused workflows plus a few general-purpose productivity tools.
+A collection of [Claude Agent Skills](https://docs.claude.com/en/docs/agents-and-tools/agent-skills) — security-focused (at the moment...) workflows plus a few general-purpose productivity tools.
 
 ## Skills
 
-| Skill | What it does |
-|---|---|
-| [`repo-threat-model`](repo-threat-model/SKILL.md) | Generates a STRIDE threat model directly from a GitHub repository or codebase — no interviews, no workshops. |
-| [`security-by-design`](security-by-design/SKILL.md) | Derives specific, testable security acceptance criteria from an architecture document (CLAUDE.md, ADR, API spec…). |
-| [`threat-actor-sim`](threat-actor-sim/SKILL.md) | Simulates a specific threat actor (ransomware gang, APT, insider…) attacking your system, from the adversary's perspective. |
-| [`security-translator`](security-translator/SKILL.md) | Translates technical security findings (CVE, CVSS, pentest reports) into decision-ready language for boards and management. |
+| Skill                                                     | What it does                                                                                                                         |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| [`repo-threat-model`](repo-threat-model/SKILL.md)         | Generates a STRIDE threat model directly from a GitHub repository or codebase — no interviews, no workshops.                         |
+| [`security-by-design`](security-by-design/SKILL.md)       | Derives specific, testable security acceptance criteria from an architecture document (CLAUDE.md, ADR, API spec…).                   |
+| [`threat-actor-sim`](threat-actor-sim/SKILL.md)           | Simulates a specific threat actor (ransomware gang, APT, insider…) attacking your system, from the adversary's perspective.          |
+| [`security-translator`](security-translator/SKILL.md)     | Translates technical security findings (CVE, CVSS, pentest reports) into decision-ready language for boards and management.          |
 | [`design-system-builder`](design-system-builder/SKILL.md) | Builds a complete, portable design-system spec — colors, type, tokens, components, voice — usable as a prompt or lifted into a repo. |
-| [`project-save-state`](project-save-state/SKILL.md) | Captures the full state of a project into a compact snapshot that restores context in any future Claude conversation. |
+| [`project-save-state`](project-save-state/SKILL.md)       | Captures the full state of a project into a compact snapshot that restores context in any future Claude conversation.                |
 
 The security skills complement each other: `security-by-design` works from design documents, `repo-threat-model` from actual code, `threat-actor-sim` adds the attacker's strategic view on top of either.
 
